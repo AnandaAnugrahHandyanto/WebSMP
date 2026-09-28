@@ -5,6 +5,7 @@ public class Kelas {
     private String namaKelas;
     private int idWaliKelas; // FK ke guru
     private String namaWaliKelas; // Untuk display, dari JOIN
+    private int jumlahSiswa;
 
     public Kelas() {
     }
@@ -46,5 +47,13 @@ public class Kelas {
 
     public void setNamaWaliKelas(String namaWaliKelas) {
         this.namaWaliKelas = namaWaliKelas;
+    }
+
+    public int getJumlahSiswa() {
+        return jumlahSiswa;
+    }
+
+    public void setJumlahSiswa(int jumlahSiswa) {
+        this.jumlahSiswa = jumlahSiswa;
     }
 }

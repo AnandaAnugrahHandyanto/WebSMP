@@ -62,7 +62,7 @@ public class KelasDAO {
     public List<Kelas> getAll() {
         List<Kelas> listKelas = new ArrayList<>();
         // Query includes join to get teacher's name for display
-        String sql = "SELECT k.*, g.nama_guru FROM kelas k LEFT JOIN guru g ON k.id_wali_kelas = g.id_guru";
+        String sql = "SELECT k.*, g.nama_guru, COUNT(s.id_siswa) AS jumlah_siswa FROM kelas k LEFT JOIN guru g ON k.id_wali_kelas = g.id_guru LEFT JOIN siswa s ON s.id_kelas = k.id_kelas GROUP BY k.id_kelas, k.nama_kelas, g.nama_guru ORDER BY k.nama_kelas";
         try (PreparedStatement ps = koneksi.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -71,6 +71,7 @@ public class KelasDAO {
                 kelas.setNamaKelas(rs.getString("nama_kelas"));
                 kelas.setIdWaliKelas(rs.getInt("id_wali_kelas"));
                 kelas.setNamaWaliKelas(rs.getString("nama_guru")); // Get teacher name from join
+                kelas.setJumlahSiswa(rs.getInt("jumlah_siswa"));
                 listKelas.add(kelas);
             }
         } catch (SQLException e) {
@@ -81,7 +82,7 @@ public class KelasDAO {
 
     public Kelas getById(int idKelas) {
         Kelas kelas = null;
-        String sql = "SELECT k.*, g.nama_guru FROM kelas k LEFT JOIN guru g ON k.id_wali_kelas = g.id_guru WHERE k.id_kelas=?";
+        String sql = "SELECT k.*, g.nama_guru, (SELECT COUNT(*) FROM siswa WHERE id_kelas = k.id_kelas) AS jumlah_siswa FROM kelas k LEFT JOIN guru g ON k.id_wali_kelas = g.id_guru WHERE k.id_kelas=?";
         try (PreparedStatement ps = koneksi.prepareStatement(sql)) {
             ps.setInt(1, idKelas);
             try (ResultSet rs = ps.executeQuery()) {
@@ -91,6 +92,7 @@ public class KelasDAO {
                     kelas.setNamaKelas(rs.getString("nama_kelas"));
                     kelas.setIdWaliKelas(rs.getInt("id_wali_kelas"));
                     kelas.setNamaWaliKelas(rs.getString("nama_guru"));
+                    kelas.setJumlahSiswa(rs.getInt("jumlah_siswa"));
                 }
             }
         } catch (SQLException e) {

@@ -5,43 +5,36 @@
         response.sendRedirect("login.jsp");
         return;
     }
-    
+    request.setAttribute("pageTitle", "Tambah Kelas");
     List<Guru> listGuru = new GuruDAO().getAll();
 %>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Tambah Kelas</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <div class="container">
-                <a class="navbar-brand" href="index.jsp">Sistem Akademik SMP</a>
-                <div class="navbar-nav ms-auto">
-                    <a class="nav-link" href="tampil_siswa.jsp">Data Siswa</a>
-                    <a class="nav-link" href="tampil_guru.jsp">Data Guru</a>
-                    <a class="nav-link active" href="tampil_kelas.jsp">Data Kelas</a>
-                    <a class="btn btn-danger btn-sm ms-3" href="logout.jsp">Logout</a>
-                </div>
+<html lang="id">
+<head>
+    <%@include file="fragment/head.jsp" %>
+</head>
+<body>
+    <%@include file="fragment/sidebar.jsp" %>
+    <div class="main-content">
+        <%@include file="fragment/topbar.jsp" %>
+        <div class="page-content">
+            <div class="page-header">
+                <h1 class="page-title">Tambah Kelas</h1>
+                <p class="page-subtitle">Buat kelas baru dan tentukan wali kelas</p>
             </div>
-        </nav>
 
-        <div class="container mt-4">
-            <h2>Tambah Kelas Baru</h2>
-            <div class="card mt-3">
+            <div class="card animate-fade" style="max-width:760px;">
                 <div class="card-body">
-                    <form action="KelasServlet" method="POST">
+                    <form action="KelasServlet" method="POST" class="row g-3">
                         <input type="hidden" name="action" value="simpan">
-                        <div class="mb-3">
+                        <div class="col-md-6">
                             <label for="namaKelas" class="form-label">Nama Kelas</label>
                             <input type="text" id="namaKelas" name="nama_kelas" class="form-control" placeholder="Contoh: VII A" required>
                         </div>
-                        <div class="mb-3">
+                        <div class="col-md-6">
                             <label for="idWaliKelas" class="form-label">Wali Kelas</label>
                             <select id="idWaliKelas" name="id_wali_kelas" class="form-select">
-                                <option value="">-- Pilih Wali Kelas --</option>
+                                <option value="">-- Tanpa Wali Kelas --</option>
                                 <%
                                     for (Guru g : listGuru) {
                                 %>
@@ -51,11 +44,17 @@
                                 %>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                        <a href="tampil_kelas.jsp" class="btn btn-secondary">Batal</a>
+                        <div class="col-12 d-flex gap-2 pt-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-lg me-1"></i> Simpan
+                            </button>
+                            <a href="tampil_kelas.jsp" class="btn btn-outline-secondary">Batal</a>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
-    </body>
+    </div>
+    <%@include file="fragment/scripts.jsp" %>
+</body>
 </html>
