@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="dao.SiswaDAO, model.Siswa"%>
+<%@page import="dao.KelasDAO, model.Kelas, java.util.List, dao.SiswaDAO, model.Siswa"%>
 <%
     if (session.getAttribute("user") == null) {
         response.sendRedirect("login.jsp");
@@ -20,6 +20,10 @@
         response.sendRedirect("tampil_siswa.jsp");
         return;
     }
+    
+    // Fetch list of classes dynamically for dropdown
+    List<Kelas> listKelas = new KelasDAO().getAll();
+
 %>
 <!DOCTYPE html>
 <html>
@@ -77,8 +81,13 @@
                             <label for="idKelas" class="form-label">Kelas</label>
                             <select id="idKelas" name="id_kelas" class="form-select">
                                 <option value="">-- Pilih Kelas --</option>
-                                <option value="1" <%= (siswa.getIdKelas() == 1) ? "selected" : "" %>>VII A</option>
-                                <option value="2" <%= (siswa.getIdKelas() == 2) ? "selected" : "" %>>VII B</option>
+                                <%
+                                    for (Kelas k : listKelas) {
+                                %>
+                                <option value="<%= k.getIdKelas() %>" <%= (k.getIdKelas() == siswa.getIdKelas()) ? "selected" : "" %>><%= k.getNamaKelas() %></option>
+                                <%
+                                    }
+                                %>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Update</button>

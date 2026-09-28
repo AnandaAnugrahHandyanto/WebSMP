@@ -1,9 +1,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="dao.KelasDAO, model.Kelas, java.util.List"%>
 <%
     if (session.getAttribute("user") == null) {
         response.sendRedirect("login.jsp");
         return;
     }
+    
+    // Fetch list of classes dynamically
+    List<Kelas> listKelas = new KelasDAO().getAll();
 %>
 <!DOCTYPE html>
 <html>
@@ -60,8 +64,13 @@
                             <label for="idKelas" class="form-label">Kelas</label>
                             <select id="idKelas" name="id_kelas" class="form-select">
                                 <option value="">-- Pilih Kelas --</option>
-                                <option value="1">VII A</option>
-                                <option value="2">VII B</option>
+                                <%
+                                    for (Kelas k : listKelas) {
+                                %>
+                                <option value="<%= k.getIdKelas() %>"><%= k.getNamaKelas() %></option>
+                                <%
+                                    }
+                                %>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
