@@ -1,9 +1,3 @@
-<%-- 
-    Document   : input_siswa
-    Created on : Sep 28, 2026, 10:01:04 PM
-    Author     : anandaanugrah
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     if (session.getAttribute("user") == null) {
@@ -36,20 +30,39 @@
                     <form action="SiswaServlet" method="POST">
                         <input type="hidden" name="action" value="simpan">
                         <div class="mb-3">
-                            <label class="form-label">NIS</label>
-                            <input type="text" name="nis" class="form-control" required>
+                            <label for="nis" class="form-label">NIS</label>
+                            <input type="text" id="nis" name="nis" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Nama</label>
-                            <input type="text" name="nama" class="form-control" required>
+                            <label for="namaSiswa" class="form-label">Nama Siswa</label>
+                            <input type="text" id="namaSiswa" name="nama_siswa" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Kelas</label>
-                            <input type="text" name="kelas" class="form-control" placeholder="Contoh: VII A" required>
+                            <label for="jenisKelamin" class="form-label">Jenis Kelamin</label>
+                            <select id="jenisKelamin" name="jenis_kelamin" class="form-select" required>
+                                <option value="L">Laki-laki</option>
+                                <option value="P">Perempuan</option>
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Alamat</label>
-                            <textarea name="alamat" class="form-control" rows="3"></textarea>
+                            <label for="tanggalLahir" class="form-label">Tanggal Lahir</label>
+                            <input type="date" id="tanggalLahir" name="tanggal_lahir" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="alamat" class="form-label">Alamat</label>
+                            <textarea id="alamat" name="alamat" class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="noHp" class="form-label">No HP</label>
+                            <input type="text" id="noHp" name="no_hp" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="idKelas" class="form-label">Kelas</label>
+                            <select id="idKelas" name="id_kelas" class="form-select">
+                                <option value="">-- Pilih Kelas --</option>
+                                <option value="1">VII A</option>
+                                <option value="2">VII B</option>
+                            </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                         <a href="tampil_siswa.jsp" class="btn btn-secondary">Batal</a>
