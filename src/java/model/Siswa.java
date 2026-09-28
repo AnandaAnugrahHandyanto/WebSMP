@@ -1,42 +1,114 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-/**
- *
- * @author anandaanugrah
- */
 public class Siswa {
     private int idSiswa;
     private String nis;
-    private String nama;
-    private String kelas;
+    private String namaSiswa;
+    private String jenisKelamin;
+    private String tanggalLahir; // String untuk kemudahan di JSP/Servlet, bisa di-parse ke Date
     private String alamat;
+    private String noHp;
+    private int idKelas;
 
-    public Siswa() {}
+    // Field tambahan untuk display, bukan dari tabel siswa
+    private String namaKelas;
 
-    public Siswa(int idSiswa, String nis, String nama, String kelas, String alamat) {
+    public Siswa() {
+    }
+
+    public Siswa(int idSiswa, String nis, String namaSiswa, String jenisKelamin, String tanggalLahir, String alamat, String noHp, int idKelas, String namaKelas) {
         this.idSiswa = idSiswa;
         this.nis = nis;
-        this.nama = nama;
-        this.kelas = kelas;
+        this.namaSiswa = namaSiswa;
+        this.jenisKelamin = jenisKelamin;
+        this.tanggalLahir = tanggalLahir;
+        this.alamat = alamat;
+        this.noHp = noHp;
+        this.idKelas = idKelas;
+        this.namaKelas = namaKelas;
+    }
+
+    // Constructor tanpa idSiswa (untuk CREATE)
+    public Siswa(String nis, String namaSiswa, String jenisKelamin, String tanggalLahir, String alamat, String noHp, int idKelas) {
+        this.nis = nis;
+        this.namaSiswa = namaSiswa;
+        this.jenisKelamin = jenisKelamin;
+        this.tanggalLahir = tanggalLahir;
+        this.alamat = alamat;
+        this.noHp = noHp;
+        this.idKelas = idKelas;
+    }
+
+    // --- Getters and Setters ---
+    public int getIdSiswa() {
+        return idSiswa;
+    }
+
+    public void setIdSiswa(int idSiswa) {
+        this.idSiswa = idSiswa;
+    }
+
+    public String getNis() {
+        return nis;
+    }
+
+    public void setNis(String nis) {
+        this.nis = nis;
+    }
+
+    public String getNamaSiswa() {
+        return namaSiswa;
+    }
+
+    public void setNamaSiswa(String namaSiswa) {
+        this.namaSiswa = namaSiswa;
+    }
+
+    public String getJenisKelamin() {
+        return jenisKelamin;
+    }
+
+    public void setJenisKelamin(String jenisKelamin) {
+        this.jenisKelamin = jenisKelamin;
+    }
+
+    public String getTanggalLahir() {
+        return tanggalLahir;
+    }
+
+    public void setTanggalLahir(String tanggalLahir) {
+        this.tanggalLahir = tanggalLahir;
+    }
+
+    public String getAlamat() {
+        return alamat;
+    }
+
+    public void setAlamat(String alamat) {
         this.alamat = alamat;
     }
 
-    public int getIdSiswa() { return idSiswa; }
-    public void setIdSiswa(int idSiswa) { this.idSiswa = idSiswa; }
+    public String getNoHp() {
+        return noHp;
+    }
 
-    public String getNis() { return nis; }
-    public void setNis(String nis) { this.nis = nis; }
+    public void setNoHp(String noHp) {
+        this.noHp = noHp;
+    }
 
-    public String getNama() { return nama; }
-    public void setNama(String nama) { this.nama = nama; }
+    public int getIdKelas() {
+        return idKelas;
+    }
 
-    public String getKelas() { return kelas; }
-    public void setKelas(String kelas) { this.kelas = kelas; }
+    public void setIdKelas(int idKelas) {
+        this.idKelas = idKelas;
+    }
 
-    public String getAlamat() { return alamat; }
-    public void setAlamat(String alamat) { this.alamat = alamat; }
+    public String getNamaKelas() {
+        return namaKelas;
+    }
+
+    public void setNamaKelas(String namaKelas) {
+        this.namaKelas = namaKelas;
+    }
 }

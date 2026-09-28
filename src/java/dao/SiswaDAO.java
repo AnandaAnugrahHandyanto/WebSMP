@@ -1,100 +1,111 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
 
 import config.Koneksi;
 import model.Siswa;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author anandaanugrah
- */
 public class SiswaDAO {
 
-    public void simpan(Siswa siswa) {
-        String sql = "INSERT INTO siswa (nis, nama, kelas, alamat) VALUES (?, ?, ?, ?)";
-        try (Connection conn = Koneksi.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, siswa.getNis());
-            ps.setString(2, siswa.getNama());
-            ps.setString(3, siswa.getKelas());
-            ps.setString(4, siswa.getAlamat());
-            ps.executeUpdate();
-            System.out.println("Data siswa berhasil disimpan!");
-        } catch (SQLException e) {
-            System.out.println("Gagal simpan siswa: " + e.getMessage());
-        }
+    private Connection koneksi;
+
+    public SiswaDAO() {
+        koneksi = Koneksi.getConnection();
     }
 
-    public List<Siswa> getAll() {
-        List<Siswa> listSiswa = new ArrayList<>();
-        String sql = "SELECT * FROM siswa";
-        try (Connection conn = Koneksi.getConnection();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
-            while (rs.next()) {
-                Siswa s = new Siswa();
-                s.setIdSiswa(rs.getInt("id_siswa"));
-                s.setNis(rs.getString("nis"));
-                s.setNama(rs.getString("nama"));
-                s.setKelas(rs.getString("kelas"));
-                s.setAlamat(rs.getString("alamat"));
-                listSiswa.add(s);
-            }
+    public void simpan(Siswa siswa) {
+        String sql = "INSERT INTO siswa (nis, nama_siswa, jenis_kelamin, tanggal_lahir, alamat, no_hp, id_kelas) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement ps = koneksi.prepareStatement(sql)) {
+            ps.setString(1, siswa.getNis());
+            ps.setString(2, siswa.getNamaSiswa());
+            ps.setString(3, siswa.getJenisKelamin());
+            ps.setString(4, siswa.getTanggalLahir()); // Menggunakan String, nanti di-parse jika perlu Date
+            ps.setString(5, siswa.getAlamat());
+            ps.setString(6, siswa.getNoHp());
+            ps.setInt(7, siswa.getIdKelas());
+            ps.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Gagal ambil data siswa: " + e.getMessage());
+            e.printStackTrace();
         }
-        return listSiswa;
     }
 
     public void update(Siswa siswa) {
-        String sql = "UPDATE siswa SET nis=?, nama=?, kelas=?, alamat=? WHERE id_siswa=?";
-        try (Connection conn = Koneksi.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        String sql = "UPDATE siswa SET nis=?, nama_siswa=?, jenis_kelamin=?, tanggal_lahir=?, alamat=?, no_hp=?, id_kelas=? WHERE id_siswa=?";
+        try (PreparedStatement ps = koneksi.prepareStatement(sql)) {
             ps.setString(1, siswa.getNis());
-            ps.setString(2, siswa.getNama());
-            ps.setString(3, siswa.getKelas());
-            ps.setString(4, siswa.getAlamat());
-            ps.setInt(5, siswa.getIdSiswa());
+            ps.setString(2, siswa.getNamaSiswa());
+            ps.setString(3, siswa.getJenisKelamin());
+            ps.setString(4, siswa.getTanggalLahir());
+            ps.setString(5, siswa.getAlamat());
+            ps.setString(6, siswa.getNoHp());
+            ps.setInt(7, siswa.getIdKelas());
+            ps.setInt(8, siswa.getIdSiswa());
             ps.executeUpdate();
-            System.out.println("Data siswa berhasil diupdate!");
         } catch (SQLException e) {
-            System.out.println("Gagal update siswa: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
     public void hapus(int idSiswa) {
         String sql = "DELETE FROM siswa WHERE id_siswa=?";
-        try (Connection conn = Koneksi.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = koneksi.prepareStatement(sql)) {
             ps.setInt(1, idSiswa);
             ps.executeUpdate();
-            System.out.println("Data siswa berhasil dihapus!");
         } catch (SQLException e) {
-            System.out.println("Gagal hapus siswa: " + e.getMessage());
+            e.printStackTrace();
         }
     }
-    
-    public static void main(String[] args) {
-        SiswaDAO dao = new SiswaDAO();
-        
-        Siswa s = new Siswa();
-        s.setNis("2024001");
-        s.setNama("Budi Santoso");
-        s.setKelas("VII A");
-        s.setAlamat("Jl. Merdeka No. 10");
-        dao.simpan(s);
-        
-        List<Siswa> list = dao.getAll();
-        System.out.println("\n=== DAFTAR SISWA ===");
-        for (Siswa siswa : list) {
-            System.out.println(siswa.getIdSiswa() + " | " + siswa.getNis() + " | " + 
-                               siswa.getNama() + " | " + siswa.getKelas() + " | " + siswa.getAlamat());
+
+    public List<Siswa> getAll() {
+        List<Siswa> listSiswa = new ArrayList<>();
+        String sql = "SELECT s.*, k.nama_kelas FROM siswa s LEFT JOIN kelas k ON s.id_kelas = k.id_kelas";
+        try (PreparedStatement ps = koneksi.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Siswa siswa = new Siswa();
+                siswa.setIdSiswa(rs.getInt("id_siswa"));
+                siswa.setNis(rs.getString("nis"));
+                siswa.setNamaSiswa(rs.getString("nama_siswa"));
+                siswa.setJenisKelamin(rs.getString("jenis_kelamin"));
+                siswa.setTanggalLahir(rs.getString("tanggal_lahir"));
+                siswa.setAlamat(rs.getString("alamat"));
+                siswa.setNoHp(rs.getString("no_hp"));
+                siswa.setIdKelas(rs.getInt("id_kelas"));
+                siswa.setNamaKelas(rs.getString("nama_kelas")); // Set nama kelas dari join
+                listSiswa.add(siswa);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return listSiswa;
+    }
+
+    public Siswa getById(int idSiswa) {
+        Siswa siswa = null;
+        String sql = "SELECT s.*, k.nama_kelas FROM siswa s LEFT JOIN kelas k ON s.id_kelas = k.id_kelas WHERE s.id_siswa=?";
+        try (PreparedStatement ps = koneksi.prepareStatement(sql)) {
+            ps.setInt(1, idSiswa);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    siswa = new Siswa();
+                    siswa.setIdSiswa(rs.getInt("id_siswa"));
+                    siswa.setNis(rs.getString("nis"));
+                    siswa.setNamaSiswa(rs.getString("nama_siswa"));
+                    siswa.setJenisKelamin(rs.getString("jenis_kelamin"));
+                    siswa.setTanggalLahir(rs.getString("tanggal_lahir"));
+                    siswa.setAlamat(rs.getString("alamat"));
+                    siswa.setNoHp(rs.getString("no_hp"));
+                    siswa.setIdKelas(rs.getInt("id_kelas"));
+                    siswa.setNamaKelas(rs.getString("nama_kelas"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return siswa;
     }
 }
