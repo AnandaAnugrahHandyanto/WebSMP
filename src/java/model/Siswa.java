@@ -5,12 +5,11 @@ public class Siswa {
     private String nis;
     private String namaSiswa;
     private String jenisKelamin;
-    private String tanggalLahir; // String untuk kemudahan di JSP/Servlet, bisa di-parse ke Date
+    private String tanggalLahir;
     private String alamat;
     private String noHp;
     private int idKelas;
 
-    // Field tambahan untuk display, bukan dari tabel siswa
     private String namaKelas;
 
     public Siswa() {
@@ -28,7 +27,6 @@ public class Siswa {
         this.namaKelas = namaKelas;
     }
 
-    // Constructor tanpa idSiswa (untuk CREATE)
     public Siswa(String nis, String namaSiswa, String jenisKelamin, String tanggalLahir, String alamat, String noHp, int idKelas) {
         this.nis = nis;
         this.namaSiswa = namaSiswa;
@@ -39,7 +37,6 @@ public class Siswa {
         this.idKelas = idKelas;
     }
 
-    // --- Getters and Setters ---
     public int getIdSiswa() {
         return idSiswa;
     }
