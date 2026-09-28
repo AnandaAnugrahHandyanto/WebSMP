@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller;
 
 import dao.SiswaDAO;
@@ -13,10 +9,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author anandaanugrah
- */
 @WebServlet(name = "SiswaServlet", urlPatterns = {"/SiswaServlet"})
 public class SiswaServlet extends HttpServlet {
 
@@ -46,15 +38,25 @@ public class SiswaServlet extends HttpServlet {
         
         String action = request.getParameter("action");
         String nis = request.getParameter("nis");
-        String nama = request.getParameter("nama");
-        String kelas = request.getParameter("kelas");
+        String namaSiswa = request.getParameter("nama_siswa");
+        String jenisKelamin = request.getParameter("jenis_kelamin");
+        String tanggalLahir = request.getParameter("tanggal_lahir");
         String alamat = request.getParameter("alamat");
+        String noHp = request.getParameter("no_hp");
+        String idKelasStr = request.getParameter("id_kelas");
         
         Siswa siswa = new Siswa();
         siswa.setNis(nis);
-        siswa.setNama(nama);
-        siswa.setKelas(kelas);
+        siswa.setNamaSiswa(namaSiswa);
+        siswa.setJenisKelamin(jenisKelamin);
+        siswa.setTanggalLahir(tanggalLahir);
         siswa.setAlamat(alamat);
+        siswa.setNoHp(noHp);
+        
+        // Handle id_kelas (bisa null atau kosong)
+        if (idKelasStr != null && !idKelasStr.isEmpty()) {
+            siswa.setIdKelas(Integer.parseInt(idKelasStr));
+        }
         
         if (action.equals("simpan")) {
             siswaDAO.simpan(siswa);
