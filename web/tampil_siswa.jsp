@@ -1,9 +1,3 @@
-<%-- 
-    Document   : tampil_siswa
-    Created on : Sep 28, 2026, 10:00:20 PM
-    Author     : anandaanugrah
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="dao.SiswaDAO, model.Siswa, java.util.List"%>
 <%
@@ -47,7 +41,8 @@
                             <tr>
                                 <th>No</th>
                                 <th>NIS</th>
-                                <th>Nama</th>
+                                <th>Nama Siswa</th>
+                                <th>Jenis Kelamin</th>
                                 <th>Kelas</th>
                                 <th>Alamat</th>
                                 <th>Aksi</th>
@@ -61,8 +56,9 @@
                             <tr>
                                 <td><%= no++ %></td>
                                 <td><%= s.getNis() %></td>
-                                <td><%= s.getNama() %></td>
-                                <td><%= s.getKelas() %></td>
+                                <td><%= s.getNamaSiswa() %></td>
+                                <td><%= s.getJenisKelamin() %></td>
+                                <td><%= s.getNamaKelas() == null ? "-" : s.getNamaKelas() %></td>
                                 <td><%= s.getAlamat() %></td>
                                 <td>
                                     <a href="edit_siswa.jsp?id=<%= s.getIdSiswa() %>" class="btn btn-warning btn-sm">Edit</a>
