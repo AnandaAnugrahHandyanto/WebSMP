@@ -1,12 +1,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    String currentUri = request.getRequestURI();
-    String currentPage = currentUri.substring(currentUri.lastIndexOf('/') + 1);
-    String pageTitle = (String) request.getAttribute("pageTitle");
-    if (pageTitle == null) {
-        pageTitle = "Dashboard";
+    String topbarCurrentUri = request.getRequestURI();
+    String topbarCurrentPage = topbarCurrentUri.substring(topbarCurrentUri.lastIndexOf('/') + 1);
+    String topbarPageTitle = (String) request.getAttribute("pageTitle");
+    if (topbarPageTitle == null) {
+        topbarPageTitle = "Dashboard";
     }
-    String user = (String) session.getAttribute("user");
+    String topbarUser = (String) session.getAttribute("user");
 %>
 <header class="topbar">
     <div class="d-flex align-items-center gap-3">
@@ -16,7 +16,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item">Beranda</li>
-                <li class="breadcrumb-item active"><%= pageTitle %></li>
+                <li class="breadcrumb-item active"><%= topbarPageTitle %></li>
             </ol>
         </nav>
     </div>
@@ -26,7 +26,7 @@
         </button>
         <div class="d-none d-sm-flex align-items-center gap-2 ps-2">
             <i class="bi bi-person-circle text-secondary"></i>
-            <span class="small fw-semibold"><%= user == null ? "-" : user %></span>
+            <span class="small fw-semibold"><%= topbarUser == null ? "-" : topbarUser %></span>
         </div>
         <a href="logout.jsp" class="btn btn-sm btn-outline-primary">
             <i class="bi bi-box-arrow-right"></i> <span class="d-none d-sm-inline">Logout</span>
