@@ -34,7 +34,6 @@
             <div class="page-header">
                 <h1 class="page-title">Selamat datang, <%= namaSiswa %></h1>
                 <p class="page-subtitle">Kelas: <%= namaKelas == null ? "-" : namaKelas %></p>
-                <p>DEBUG: NIS = <%= nis %>, ID Siswa = <%= idSiswa %></p>
             </div>
             
             <div class="card animate-fade">
