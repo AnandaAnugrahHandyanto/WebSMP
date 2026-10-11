@@ -29,6 +29,7 @@ USE `db_smp`;
 SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `absensi`;
 DROP TABLE IF EXISTS `jadwal`;
+DROP TABLE IF EXISTS `TblRuangKuliah`;
 DROP TABLE IF EXISTS `nilai`;
 DROP TABLE IF EXISTS `siswa`;
 DROP TABLE IF EXISTS `mapel`;
@@ -135,6 +136,34 @@ CREATE TABLE `jadwal` (
   FOREIGN KEY (`id_mapel`) REFERENCES `mapel`(`id_mapel`) ON DELETE CASCADE,
   FOREIGN KEY (`id_guru`) REFERENCES `guru`(`id_guru`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Struktur tabel untuk tabel `TblRuangKuliah`
+--
+CREATE TABLE `TblRuangKuliah` (
+  `No` INT NOT NULL AUTO_INCREMENT,
+  `idruang` VARCHAR(3) NOT NULL,
+  `Letak` VARCHAR(10) NOT NULL,
+  `Lokasi` VARCHAR(10) NOT NULL,
+  `Kapasitas` INT NOT NULL,
+  PRIMARY KEY (`No`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `TblRuangKuliah`
+--
+INSERT INTO `TblRuangKuliah` (`idruang`, `Letak`, `Lokasi`, `Kapasitas`) VALUES
+('201', 'Lantai 2', 'Gedung A', 30),
+('202', 'Lantai 2', 'Gedung A', 40),
+('301', 'Lantai 3', 'Gedung A', 30),
+('302', 'Lantai 3', 'Gedung A', 40),
+('401', 'Lantai 4', 'Gedung A', 30),
+('402', 'Lantai 4', 'Gedung A', 40),
+('201', 'Lantai 2', 'Gedung B', 30),
+('202', 'Lantai 2', 'Gedung B', 40),
+('301', 'Lantai 3', 'Gedung B', 30),
+('302', 'Lantai 3', 'Gedung B', 40),
+('401', 'Lantai 4', 'Gedung B', 30);
 
 --
 -- Struktur tabel untuk tabel `absensi`
