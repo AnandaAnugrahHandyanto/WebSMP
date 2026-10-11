@@ -15,8 +15,18 @@
         {"tampil_nilai.jsp", "Data Nilai", "bi-clipboard-data", "admin"},
         {"tampil_jadwal.jsp", "Data Jadwal", "bi-calendar-week", "admin"},
         {"tampil_absensi.jsp", "Data Absensi", "bi-check2-square", "admin"},
+        // Menu tambahan untuk role GURU
+        {"tampil_absensi.jsp", "Rekap Absensi", "bi-check2-square", "guru"},
+        {"input_absensi.jsp", "Input Absensi", "bi-plus-square", "guru"},
+        {"tampil_nilai.jsp", "Rekap Nilai", "bi-clipboard-data", "guru"},
+        {"input_nilai.jsp", "Input Nilai", "bi-plus-square", "guru"},
+        {"tampil_jadwal.jsp", "Jadwal Mengajar", "bi-calendar-week", "guru"},
         {"setting_user.jsp", "Kelola User", "bi-people-fill", "admin"},
         {"setting_password.jsp", "Ganti Password", "bi-key-fill", "admin"},
+        // Menu tambahan untuk role SISWA
+        {"tampil_absensi.jsp", "Absensi Saya", "bi-check2-square", "siswa"},
+        {"tampil_nilai.jsp", "Nilai Saya", "bi-clipboard-data", "siswa"},
+        {"tampil_jadwal.jsp", "Jadwal Saya", "bi-calendar-week", "siswa"},
         {"setting_password.jsp", "Ganti Password", "bi-key-fill", "guru"},
         {"setting_password.jsp", "Ganti Password", "bi-key-fill", "siswa"}
     };
